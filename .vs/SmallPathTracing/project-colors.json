@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "6d846e10-fcb4-4143-9d72-80d8d8ca8b50": {
+      "ProjectGuid": "6d846e10-fcb4-4143-9d72-80d8d8ca8b50",
+      "DisplayName": "SmallPathTracing",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

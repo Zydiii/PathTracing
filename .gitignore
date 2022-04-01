@@ -1,0 +1,10 @@
+build/
+.DS_Store
+.vscode
+.clang-format
+*.aux
+*.log
+*.gz
+*.out
+
+(old)*
