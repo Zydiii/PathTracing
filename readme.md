@@ -1,5 +1,7 @@
 # 路径追踪实践——smallpt源码解读
 
+https://zhuanlan.zhihu.com/p/490551718
+
 采样率 4
 
 ![](./result/result_4.png)
