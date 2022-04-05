@@ -146,8 +146,12 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="geometry\Material.h" />
+    <ClInclude Include="geometry\Ray.h" />
+    <ClInclude Include="geometry\Shape.h" />
     <ClInclude Include="math\Vec.h" />
     <ClInclude Include="radiance.h" />
+    <ClInclude Include="scene\Scene.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

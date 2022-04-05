@@ -19,6 +19,9 @@
     <Filter Include="头文件\geometry">
       <UniqueIdentifier>{50ccf232-35a2-4d1f-b10e-0704b7fa9fb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Scene">
+      <UniqueIdentifier>{62ee6603-03a9-4417-9cb7-03ca14a81edf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -34,6 +37,18 @@
     </ClInclude>
     <ClInclude Include="math\Vec.h">
       <Filter>头文件\math</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\Shape.h">
+      <Filter>头文件\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\Material.h">
+      <Filter>头文件\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="geometry\Ray.h">
+      <Filter>头文件\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\Scene.h">
+      <Filter>头文件\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
