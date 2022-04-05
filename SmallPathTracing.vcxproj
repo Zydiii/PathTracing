@@ -146,6 +146,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="math\Vec.h" />
     <ClInclude Include="radiance.h" />
     <ClInclude Include="struct.h" />
   </ItemGroup>

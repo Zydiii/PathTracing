@@ -1,24 +1,6 @@
 #pragma once
 #define _USE_MATH_DEFINES
-
-// 向量
-struct Vec3d
-{
-    double x, y, z; 
-    Vec3d(double x_ = 0, double y_ = 0, double z_ = 0)
-    {
-        x = x_;
-        y = y_;
-        z = z_;
-    }
-    Vec3d operator+(const Vec3d& b) const { return Vec3d(x + b.x, y + b.y, z + b.z); }
-    Vec3d operator-(const Vec3d& b) const { return Vec3d(x - b.x, y - b.y, z - b.z); }
-    Vec3d operator*(double b) const { return Vec3d(x * b, y * b, z * b); }
-    Vec3d mult(const Vec3d& b) const { return Vec3d(x * b.x, y * b.y, z * b.z); }
-    Vec3d& norm() { return *this = *this * (1 / sqrt(x * x + y * y + z * z)); }
-    double dot(const Vec3d& b) const { return x * b.x + y * b.y + z * b.z; }
-    Vec3d cross(Vec3d& b) { return Vec3d(y * b.z - z * b.y, z * b.x - x * b.z, x * b.y - y * b.x); }
-};
+#include "math/Vec.h"
 
 // 光线
 struct Ray
