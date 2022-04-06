@@ -3,6 +3,9 @@
 #include <memory>
 #include "../geometry/Shape.h"
 
+// 获得一个最大值用于判断相交
+const float kInfinity = std::numeric_limits<double>::max();
+
 class Scene 
 {
 public:
@@ -10,19 +13,27 @@ public:
 	uint32_t num;
 
 	// constructor
-	Scene(){
-        num = 32;
-        gen.seed(0);
-        for (uint32_t i = 0; i < num; ++i) {
-            Vec3d randPos((0.5 - dis(gen)) * 10, (0.5 - dis(gen)) * 10, (0.5 + dis(gen) * 10));
-            double randRadius = (0.5 + dis(gen) * 0.5);
-            objects.push_back(std::unique_ptr<Shape>(new Sphere(randRadius, randPos)));
+	Scene() : num(0) {}
+    virtual ~Scene() {}
+
+    // 判断光线与物体求交
+    bool intersect(const Ray& r, double& tNear, const Shape*& hit) const
+    {
+        tNear = kInfinity;
+        std::vector<std::unique_ptr<Shape>>::const_iterator iter = objects.begin();
+        for (; iter != objects.end(); ++iter) {
+            double t = kInfinity;
+            if ((*iter)->intersect(r, t) && t < tNear) {
+                hit = iter->get();
+                tNear = t;
+            }
         }
-	}
-    ~Scene() {}
+
+        return (hit != nullptr);
+    }
 };
 
-class testScene : public Scene
+class TestScene : public Scene
 {
 public:
     std::vector<Sphere*> spheres = {
@@ -41,10 +52,25 @@ public:
     };
 
     // constructor
-    testScene() {
+    TestScene() {
         num = spheres.size();
         for (uint32_t i = 0; i < num; ++i) {
             objects.push_back(std::unique_ptr<Shape>(spheres[i]));
+        }
+    }
+};
+
+class RandomScene : public Scene
+{
+public:
+    // constructor
+    RandomScene() {
+        num = 32;
+        gen.seed(0);
+        for (uint32_t i = 0; i < num; ++i) {
+            Vec3d randPos((0.5 - dis(gen)) * 10, (0.5 - dis(gen)) * 10, (0.5 + dis(gen) * 10));
+            double randRadius = (0.5 + dis(gen) * 0.5);
+            objects.push_back(std::unique_ptr<Shape>(new Sphere(randRadius, randPos)));
         }
     }
 };

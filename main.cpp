@@ -4,12 +4,15 @@
 // Usage: time ./smallpt 5000 && xv image.ppm
 #include <fstream>
 #include <string>
+#include "scene/Scene.h"
 #include "radiance.h"
 
 int main(int argc, char* argv[])
 {
+    Scene* testScene = new TestScene();
+
     // 设置图像和相机
-    int w = 1024, h = 768, samps = argc == 2 ? atoi(argv[1]) / 4 : 5;
+    int w = 1024, h = 768, samps = argc == 2 ? atoi(argv[1]) / 4 : 100;
     Vec3d r, *c = new Vec3d[w * h];
     Ray cam(Vec3d(50, 52, 295.6), Vec3d(0, -0.042612, -1).normalize());
     Vec3d cx = Vec3d(w * .5135 / h, 0, 0), cy = cx.cross(cam.dir).normalize() * .5135;
@@ -31,7 +34,7 @@ int main(int argc, char* argv[])
                         double r2 = 2 * erand48(), dy = r2 < 1 ? sqrt(r2) - 1 : 1 - sqrt(2 - r2);
                         Vec3d d = cx * (((sx + .5 + dx) / 2 + x) / w - .5) +
                             cy * (((sy + .5 + dy) / 2 + y) / h - .5) + cam.dir;
-                        r = r + radiance(Ray(cam.origin + d * 140, d.normalize()), 0, Xi) * (1. / samps);
+                        r = r + radiance(Ray(cam.origin + d * 140, d.normalize()), 0, Xi, testScene) * (1. / samps);
                     } 
                     c[i] = c[i] + Vec3d(clamp(r.x), clamp(r.y), clamp(r.z)) * .25;
                 }
