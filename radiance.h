@@ -1,7 +1,10 @@
 ﻿#pragma once
 #include <math.h>   
-#include "struct.h"
-//#include "geometry/Shape.h"
+//#include "struct.h"
+#include "geometry/Shape.h"
+
+// 获得一个最大值用于判断相交
+const float kInfinity = std::numeric_limits<double>::max();
 
 // 随机数
 double erand48()
@@ -36,7 +39,8 @@ inline int toInt(double x) {
 // 场景与光线求交
 inline bool intersect(const Ray& r, double& t, int& id)
 {
-    double n = sizeof(spheres) / sizeof(Sphere), d, inf = t = 1e20;
+    double n = sizeof(spheres) / sizeof(Sphere), d;
+    t = kInfinity;
     for (int i = int(n); i--;)
     {
         if ((spheres[i].intersect(r, d)) && d < t)
@@ -45,7 +49,7 @@ inline bool intersect(const Ray& r, double& t, int& id)
             id = i;
         }
     }
-    return t < inf;
+    return t < kInfinity;
 }
 
 // 计算 radiance
