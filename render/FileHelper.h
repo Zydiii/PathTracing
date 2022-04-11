@@ -9,7 +9,7 @@
 class FileHelper {
 public:
 	static void writeImageFile(Vec3d c[], Option option) {
-        std::string filePath = "./result/result_" + std::to_string(option.samps * 4) + ".ppm";
+        std::string filePath = "./result/TestSceneResult_" + std::to_string(option.samps * 4) + ".ppm";
         std::ofstream file;
         file.open(filePath);
         if (file.fail())

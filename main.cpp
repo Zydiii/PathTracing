@@ -11,7 +11,7 @@ int main(int argc, char* argv[])
     Scene* testScene = new TestScene();
 
     // 设置图像和相机
-    int w = 1024, h = 768, samps = argc == 2 ? atoi(argv[1]) / 4 : 10;
+    int w = 1024, h = 780, samps = argc == 2 ? atoi(argv[1]) / 4 : 10;
     float fov = 0.5135;
     Camera cam(Vec3d(50, 52, 295.6), Vec3d(0, -0.042612, -1).normalize());
     Option option(w, h, samps, fov, cam);

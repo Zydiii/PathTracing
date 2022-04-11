@@ -66,7 +66,7 @@ public:
     double radius, radius2;
 
     // constructor
-    Sphere(const double& r, const Vec3d& c) : radius(r), radius2(r* r) {}
+    Sphere(const double& r) : radius(r), radius2(r* r) {}
     Sphere(const double& r, const Vec3d& p, const Vec3d& e, const Vec3d& c, const Mat_t& mat) 
         : radius(r), radius2(r* r), Shape(p, c, e, mat) {}
 
@@ -131,17 +131,57 @@ public:
 
     // constructor
     Plane() : normal(Vec3d(dis(gen), dis(gen), dis(gen))){}
-    Plane(const Vec3d& p, const Vec3d& c, const Vec3d& e, const Vec3d &n, const Mat_t& mat) 
+    Plane(const Vec3d& p, const Vec3d& e, const Vec3d& c, const Vec3d &n, const Mat_t& mat) 
         : Shape(p, c, e, mat), normal(n) {}
 
     // 光线与平面求交
     bool intersect(const Ray& ray, double& t) const {
         // (l_0 + l * t - p_0) · n = 0 => t = (p_0 - l_0) · n / (l · n)
-        double denom = normal.dot(ray.dir);
-        if (denom > eps) {
+        double denom = ray.dir.dot(normal);
+        if (denom < eps) {
             Vec3d p0l0 = position - ray.origin;
             t = p0l0.dot(normal) / denom;
             return t >= 0;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 获得交点数据，法线
+    /// </summary>
+    /// <param name="Phit"></param>
+    /// <param name="Nhit"></param>
+    /// <param name="tex"></param>
+    void getSurfaceData(const Vec3d& Phit, Vec3d& Nhit) const
+    {
+        Nhit = normal;
+    }
+};
+
+
+class Disk : public Shape {
+public:
+    Vec3d normal;
+    double radius, radius2;
+
+    // constructor
+    Disk(const double& r) : normal(Vec3d(dis(gen), dis(gen), dis(gen))), radius(dis(gen)), radius2(r* r) {}
+    Disk(const double &r, const Vec3d& p, const Vec3d& e, const Vec3d& c, const Vec3d& n, const Mat_t& mat)
+        : radius(r), radius2(r * r), Shape(p, e, c, mat), normal(n) {}
+
+    // 光线与圆盘求交
+    bool intersect(const Ray& ray, double& t) const {
+        double denom = ray.dir.dot(normal);
+        if (denom < eps) {
+            Vec3d p0l0 = position - ray.origin;
+            t = p0l0.dot(normal) / denom;
+            if (t < 0)
+                return false;
+            else {
+                Vec3d p = ray.origin + ray.dir * t;
+                Vec3d v = p - position;
+                return v.dot(v) <= radius2;
+            }
         }
         return false;
     }
