@@ -17,3 +17,6 @@ double erand48()
 
 // 获得一个最大值用于判断相交
 const float kInfinity = std::numeric_limits<double>::max();
+
+// 误差值
+const double eps = 1e-4;

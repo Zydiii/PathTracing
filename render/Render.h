@@ -29,7 +29,9 @@ public:
         }
 
         // ¹âÕÕ¼ÆËã
-        Vec3d x = r.origin + r.dir * t, n = (x - obj->position).normalize(), nl = n.dot(r.dir) < 0 ? n : n * -1;
+        Vec3d x = r.origin + r.dir * t, n, nl;
+        obj->getSurfaceData(x, n);
+        nl = n.dot(r.dir) < 0 ? n : n * -1;
         if (obj->material == DIFF) // Âþ·´Éä
         {
             double r1 = 2 * M_PI * erand48(), r2 = erand48(), r2s = sqrt(r2);

@@ -32,9 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="radiance.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="math\Vec.h">
       <Filter>头文件\math</Filter>
     </ClInclude>

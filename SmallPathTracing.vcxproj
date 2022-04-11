@@ -151,7 +151,6 @@
     <ClInclude Include="geometry\Shape.h" />
     <ClInclude Include="math\MathHelper.h" />
     <ClInclude Include="math\Vec.h" />
-    <ClInclude Include="radiance.h" />
     <ClInclude Include="render\Camera.h" />
     <ClInclude Include="render\FileHelper.h" />
     <ClInclude Include="render\Option.h" />

@@ -27,7 +27,7 @@ public:
     virtual bool intersect(const Ray&, double&) const = 0;
     
     // 计算交点信息
-    virtual void getSurfaceData(const Vec3d&, Vec3d&, Vec2d&) const = 0;
+    virtual void getSurfaceData(const Vec3d&, Vec3d&) const = 0;
 };
 
 /// <summary>
@@ -73,7 +73,7 @@ public:
     // 球体与光线相交
     bool intersect(const Ray& ray, double& t) const
     {
-        double t0, t1, eps = 1e-4;
+        double t0, t1;
 #if 0
         // 几何解
         Vec3d L = center - ray.origin;
@@ -109,11 +109,51 @@ public:
     /// <param name="Phit"></param>
     /// <param name="Nhit"></param>
     /// <param name="tex"></param>
-    void getSurfaceData(const Vec3d& Phit, Vec3d& Nhit, Vec2d& tex) const
+    void getSurfaceData(const Vec3d& Phit, Vec3d& Nhit) const
     {
-        Nhit = Phit - position;
-        Nhit.normalize();
-        tex.x = (1 + atan2(Nhit.z, Nhit.x) / M_PI) * 0.5;
-        tex.y = acosf(Nhit.y) / M_PI;
+        Nhit = (Phit - position).normalize();
+        /*tex.x = (1 + atan2(Nhit.z, Nhit.x) / M_PI) * 0.5;
+        tex.y = acosf(Nhit.y) / M_PI;*/
     }  
+};
+
+/// <summary>
+/// 平面
+/// </summary>
+/// <param name="p"></param>
+/// <param name="c"></param>
+/// <param name="e"></param>
+/// <param name="mat"></param>
+/// <param name=""></param>
+class Plane : public Shape {
+public:
+    Vec3d normal;
+
+    // constructor
+    Plane() : normal(Vec3d(dis(gen), dis(gen), dis(gen))){}
+    Plane(const Vec3d& p, const Vec3d& c, const Vec3d& e, const Vec3d &n, const Mat_t& mat) 
+        : Shape(p, c, e, mat), normal(n) {}
+
+    // 光线与平面求交
+    bool intersect(const Ray& ray, double& t) const {
+        // (l_0 + l * t - p_0) · n = 0 => t = (p_0 - l_0) · n / (l · n)
+        double denom = normal.dot(ray.dir);
+        if (denom > eps) {
+            Vec3d p0l0 = position - ray.origin;
+            t = p0l0.dot(normal) / denom;
+            return t >= 0;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 获得交点数据，法线
+    /// </summary>
+    /// <param name="Phit"></param>
+    /// <param name="Nhit"></param>
+    /// <param name="tex"></param>
+    void getSurfaceData(const Vec3d& Phit, Vec3d& Nhit) const
+    {
+        Nhit = normal;
+    }
 };
