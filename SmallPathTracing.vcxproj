@@ -149,8 +149,13 @@
     <ClInclude Include="geometry\Material.h" />
     <ClInclude Include="geometry\Ray.h" />
     <ClInclude Include="geometry\Shape.h" />
+    <ClInclude Include="math\MathHelper.h" />
     <ClInclude Include="math\Vec.h" />
     <ClInclude Include="radiance.h" />
+    <ClInclude Include="render\Camera.h" />
+    <ClInclude Include="render\FileHelper.h" />
+    <ClInclude Include="render\Option.h" />
+    <ClInclude Include="render\Render.h" />
     <ClInclude Include="scene\Scene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

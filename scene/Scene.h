@@ -1,10 +1,8 @@
 ﻿#pragma once
 #include <vector>
 #include <memory>
+#include "../math/MathHelper.h"
 #include "../geometry/Shape.h"
-
-// 获得一个最大值用于判断相交
-const float kInfinity = std::numeric_limits<double>::max();
 
 class Scene 
 {
