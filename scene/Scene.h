@@ -44,13 +44,13 @@ public:
         new Plane(Vec3d(50, 81.6, 81.6), Vec3d(), Vec3d(.66, .58, .85), Vec3d(0, -1, 0), DIFF), // Top
         // Disk
         //new Disk(15, Vec3d(50, 81.6, 81.6), Vec3d(), Vec3d(10, 10, 10) * 1.5, Vec3d(0, 1, 0), DIFF),  // Light
-        //new Disk(10, Vec3d(50, 50, 81.6), Vec3d(),Vec3d(.99, .99, .99), Vec3d(0, 0, 1), SPEC),        // Light
+        new Disk(10, Vec3d(50, 50, 81.6), Vec3d(),Vec3d(.99, .99, .99), Vec3d(0, 0, 1), SPEC),        // Light
         // Spheres
         new Sphere(16, Vec3d(27, 16.5, 47), Vec3d(), Vec3d(.99, .99, .99), SPEC),               // Mirr
         new Sphere(16.5, Vec3d(73, 16.5, 78), Vec3d(), Vec3d(.99, .99, .99), REFR),             // Glas
         new Sphere(6, Vec3d(38, 6, 90), Vec3d(), Vec3d(.58, .88, .82), DIFF),                   // DIFF
         new Sphere(9, Vec3d(50, 9, 70), Vec3d(), Vec3d(.99, .99, .82), REFR),                   // Glas
-        new Sphere(600, Vec3d(50, 681.6 - .27, 81.6), Vec3d(10, 10, 10), Vec3d(), DIFF)     // Lite
+        new Sphere(600, Vec3d(50, 681.6 - .27, 81.6), Vec3d(10, 10, 10), Vec3d(), DIFF)         // Light
     };
 
     // constructor

@@ -36,7 +36,7 @@ public:
             double r1 = 2 * M_PI * erand48(), r2 = erand48(), r2s = sqrt(r2);
             Vec3d w = nl, u = ((fabs(w.x) > .1 ? Vec3d(0, 1, 0) : Vec3d(1, 0, 0)).cross(w)).normalize(), v = w.cross(u);
             Vec3d d = (u * cos(r1) * r2s + v * sin(r1) * r2s + w * sqrt(1 - r2)).normalize();
-            return obj->emission + f  * radiance(Ray(x, d), depth, Xi, scene);
+            return obj->emission + f * radiance(Ray(x, d), depth, Xi, scene);
         }
         else if (obj->material == SPEC) // ¾µÃæ·´Éä
             return obj->emission + f * radiance(Ray(x, r.dir - n * 2 * n.dot(r.dir)), depth, Xi, scene);

@@ -197,3 +197,25 @@ public:
         Nhit = normal;
     }
 };
+
+class Triangle : Shape {
+public:
+    Vec3d p0, p1, p2, normal;
+
+    // 光线与三角形求交
+    bool intersect(const Ray& ray, double& t) const {
+        
+        return false;
+    }
+
+    /// <summary>
+    /// 获得交点数据，法线
+    /// </summary>
+    /// <param name="Phit"></param>
+    /// <param name="Nhit"></param>
+    /// <param name="tex"></param>
+    void getSurfaceData(const Vec3d& Phit, Vec3d& Nhit) const
+    {
+        Nhit = normal;
+    }
+};
