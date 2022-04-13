@@ -104,6 +104,10 @@ public:
     {
         return Vec3<T>(r / v.x, r / v.y, r / v.z);
     }
+    friend Vec3 operator / (const Vec3& v, const T& r)
+    {
+        return Vec3<T>(v.x / r, v.y / r, v.z / r);
+    }
 
     friend std::ostream& operator << (std::ostream& s, const Vec3<T>& v)
     {

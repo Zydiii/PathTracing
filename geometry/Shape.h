@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <random>
+#include <iostream>
 #include "../math/Vec.h"
 #include "Material.h"
 #include "Ray.h"
@@ -100,6 +101,7 @@ public:
                 return false;
         }
         t = t0;
+        //std::cout << "sphere intersect" << " " << t << std::endl;
         return true;
     }
 
@@ -132,16 +134,16 @@ public:
     // constructor
     Plane() : normal(Vec3d(dis(gen), dis(gen), dis(gen))){}
     Plane(const Vec3d& p, const Vec3d& e, const Vec3d& c, const Vec3d &n, const Mat_t& mat) 
-        : Shape(p, c, e, mat), normal(n) {}
+        : Shape(p, c, e, mat), normal(n / n.norm()) {}
 
     // 光线与平面求交
     bool intersect(const Ray& ray, double& t) const {
         // (l_0 + l * t - p_0) · n = 0 => t = (p_0 - l_0) · n / (l · n)
         double denom = ray.dir.dot(normal);
-        if (denom < eps) {
+        if (denom < -eps) {
             Vec3d p0l0 = position - ray.origin;
             t = p0l0.dot(normal) / denom;
-            return t >= 0;
+            return t >= eps;
         }
         return false;
     }
@@ -167,15 +169,15 @@ public:
     // constructor
     Disk(const double& r) : normal(Vec3d(dis(gen), dis(gen), dis(gen))), radius(dis(gen)), radius2(r* r) {}
     Disk(const double &r, const Vec3d& p, const Vec3d& e, const Vec3d& c, const Vec3d& n, const Mat_t& mat)
-        : radius(r), radius2(r * r), Shape(p, e, c, mat), normal(n) {}
+        : radius(r), radius2(r * r), Shape(p, e, c, mat), normal(n / n.norm()) {}
 
     // 光线与圆盘求交
     bool intersect(const Ray& ray, double& t) const {
         double denom = ray.dir.dot(normal);
-        if (denom < eps) {
+        if (denom < -eps) {
             Vec3d p0l0 = position - ray.origin;
             t = p0l0.dot(normal) / denom;
-            if (t < 0)
+            if (t < eps)
                 return false;
             else {
                 Vec3d p = ray.origin + ray.dir * t;
@@ -198,14 +200,35 @@ public:
     }
 };
 
-class Triangle : Shape {
+/// <summary>
+/// 三角形
+/// </summary>
+class Triangle : public Shape {
 public:
-    Vec3d p0, p1, p2, normal;
+    Vec3d p0, p1, p2, edge01, edge12, edge20, normal;
+
+    // constructor
+    Triangle(const Vec3d &pp0, const Vec3d& pp1, const Vec3d& pp2, const Vec3d& e, const Vec3d& c, const Mat_t& mat)
+        : p0(pp0), p1(pp1), p2(pp2), edge01(p1 - p0), edge12(p2 - p1), edge20(p0 - p2), 
+        Shape((p0 + p1 + p2) / 3.0, e, c, mat), normal(edge01.cross(-edge20).normalize()) {}
 
     // 光线与三角形求交
     bool intersect(const Ray& ray, double& t) const {
-        
-        return false;
+        double denom = ray.dir.dot(normal);
+        if (denom < -eps) {
+            t = (normal.dot(p0) - ray.origin.dot(normal)) / normal.dot(ray.dir);
+            if (t < 0)
+                return false;
+            Vec3d Phit = ray.origin + t * ray.dir;  
+            double a, b, c, d;
+            a = normal.dot(edge01.cross(Phit - p0));
+            b = normal.dot(edge12.cross(Phit - p1));
+            c = normal.dot(edge20.cross(Phit - p2));
+            //std::cout <<"this: " << this << "triangle intersect" << " " << t << std::endl;
+            if (normal.dot(edge01.cross(Phit - p0)) > 0 && normal.dot(edge12.cross(Phit - p1)) > 0 && normal.dot(edge20.cross(Phit - p2)) > 0)
+                return true;
+        }
+        return false;      
     }
 
     /// <summary>
